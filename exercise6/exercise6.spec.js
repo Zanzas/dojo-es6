@@ -168,7 +168,6 @@ describe('a Promise represents an operation that hasn`t completed yet, but is ex
       it('`then()` receives the result of the promise it was called on', function() {
         const wordsPromise = Promise.resolve('one   space     between each     word');
         return wordsPromise
-          .then(string => removeMultipleSpaces(string))
           .then(actual => {expect(actual).toBe('one space between each word')})
         ;
       });
@@ -178,8 +177,6 @@ describe('a Promise represents an operation that hasn`t completed yet, but is ex
       it('multiple `then()`s can be chained', function() {
         const wordsPromise = Promise.resolve('Sentence without       an end');
         return wordsPromise
-          .then(removeMultipleSpaces)
-          .then(appendPeriod)
           .then(actual => {expect(actual).toBe('Sentence without an end.')})
         ;
       });
@@ -189,9 +186,6 @@ describe('a Promise represents an operation that hasn`t completed yet, but is ex
       it('order of the `then()`s matters', function() {
         const wordsPromise = Promise.resolve('Sentence without       an end ');
         return wordsPromise
-          .then(trim)
-          .then(appendPeriod)
-          .then(removeMultipleSpaces)
           .then(actual => {expect(actual).toBe('Sentence without an end.')})
         ;
       });
@@ -213,9 +207,6 @@ describe('a Promise represents an operation that hasn`t completed yet, but is ex
       it('also asynchronously, the order still matters, promises wait, but don`t block', function() {
         const wordsPromise = Promise.resolve('trailing space   ');
         return wordsPromise
-          .then(string => new Promise(resolve => asyncUpperCaseStart(string, resolve)))
-          .then(string => new Promise(resolve => setTimeout(() => resolve(trim(string)), 100)))
-          .then(string => new Promise(resolve => setTimeout(() => resolve(appendPeriod(string)), 100)))
           .then(actual => {expect(actual).toBe('Trailing space.')})
         ;
       });
