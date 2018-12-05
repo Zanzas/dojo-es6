@@ -20,50 +20,8 @@ function grateCheese(sauceType) {
     });
 }
 
-// function makePizza(sauceType = 'red') {
-//     return makeDough()
-//         .then(() => makeSauce(sauceType))
-//         .then((sauce) => grateCheese(sauce));
-// }
-
-// async function makePizza(sauceType = 'red') {
-//     const dough = await makeDough();
-//     const sauce = await makeSauce(sauceType);
-
-//     const cheese = await grateCheese(sauce);
-
-//     return {
-//         dough,
-//         sauce,
-//         cheese,
-//     };
-// }
-
-// async function makePizza(sauceType = 'red') {
-//     let [ dough, sauce ] =
-//     await Promise.all([ makeDough(), makeSauce(sauceType) ]);
-
-//     let cheese = await grateCheese(sauce);
-
-//     return {
-//         dough,
-//         sauce,
-//         cheese,
-//     };
-// }
-
-async function makePizza(sauceType = 'red') {
-    let doughPromise  = makeDough();
-    let saucePromise  = makeSauce(sauceType);
-    let cheesePromise = saucePromise.then(sauce => {
-        return grateCheese(sauce);
-      });
-    let [ dough, sauce, cheese ] =
-    await Promise.all([ doughPromise, saucePromise, cheesePromise ]);
-
-    return {
-        dough,
-        sauce,
-        cheese,
-    };
+function makePizza(sauceType = 'red') {
+    return makeDough()
+        .then(() => makeSauce(sauceType))
+        .then((sauce) => grateCheese(sauce));
 }
